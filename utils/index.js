@@ -100,7 +100,7 @@ export const candidateOnBoardFormControls = [
 
     },
     {
-        name: "previousCompanies ",
+        name: "previousCompanies",
         label: "Previous Companies",
         placeholder: "Enter Your Previous Companies",
         type: "text",
@@ -108,7 +108,7 @@ export const candidateOnBoardFormControls = [
 
     },
     {
-        name: "totalExperience ",
+        name: "totalExperience",
         label: "Total Experience",
         placeholder: "Enter Your Total Experience",
         type: "text",
@@ -116,7 +116,7 @@ export const candidateOnBoardFormControls = [
 
     },
     {
-        name: "college ",
+        name: "college",
         label: "College",
         placeholder: "Enter Your College Name",
         type: "text",
@@ -124,7 +124,7 @@ export const candidateOnBoardFormControls = [
 
     },
     {
-        name: "collegeLocation ",
+        name: "collegeLocation",
         label: "College Location ",
         placeholder: "Enter Your College Location",
         type: "text",
@@ -132,7 +132,7 @@ export const candidateOnBoardFormControls = [
 
     },
     {
-        name: "graduatedYear ",
+        name: "graduatedYear",
         label: "Graduated Year ",
         placeholder: "Enter Your Graduated Year",
         type: "text",
@@ -140,7 +140,7 @@ export const candidateOnBoardFormControls = [
 
     },
     {
-        name: "linkedinProfile ",
+        name: "linkedinProfile",
         label: "Linkedin Profiler ",
         placeholder: "Enter Your Linkedin Profiler URL",
         type: "text",
@@ -148,7 +148,7 @@ export const candidateOnBoardFormControls = [
 
     },
     {
-        name: "githubProfile ",
+        name: "githubProfile",
         label: "Github Profile",
         placeholder: "Enter Your GitHub Profile",
         type: "text",
@@ -174,6 +174,75 @@ export const initialCandidateFormData = {
     linkedinProfile: "",
     githubProfile: "",
 
+
+
+}
+
+
+
+export const postNewJobFormControls = [
+    {
+        name: "companyName",
+        label: "Company Name",
+        placeholder: "Enter Company Name",
+        componentType: "text",
+        required: true,
+        disabled: true
+    },
+
+    {
+        name: "title",
+        label: "Title",
+        placeholder: "Enter Title",
+        componentType: "text",
+        required: true
+    },
+    {
+        name: "type",
+        label: "Type",
+        placeholder: "Enter Type",
+        componentType: "text",
+        required: true
+    },
+    {
+        name: "location",
+        label: "Location",
+        placeholder: "Enter Location",
+        componentType: "text",
+        required: true
+    },
+    {
+        name: "description",
+        label: "Description",
+        placeholder: "Enter Description",
+        componentType: "text",
+        required: true
+    },
+    {
+        name: "experience",
+        label: "Experience",
+        placeholder: "Enter Experience",
+        componentType: "text",
+        required: true
+    },
+    {
+        name: "skills",
+        label: "Skills",
+        placeholder: "Enter Skills",
+        componentType: "text",
+        required: true
+    }
+]
+
+export const initialPostNewJobFormData = {
+    companyName: "",
+
+    title: "",
+    type: "",
+    location: "",
+    description: "",
+    experience: "",
+    skills: "",
 
 
 }

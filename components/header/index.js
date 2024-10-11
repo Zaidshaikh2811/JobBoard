@@ -7,8 +7,8 @@ import { AlignJustify } from "lucide-react"
 import { UserButton } from "@clerk/nextjs"
 
 
-const Header = ({ user }) => {
-    console.log(user == "null");
+const Header = ({ user, profileInfo }) => {
+
 
 
     const menuItems = [
@@ -35,11 +35,11 @@ const Header = ({ user }) => {
         {
             label: "Activity",
             path: '/activity',
-            show: user != 'null'
+            show: profileInfo?.role == "candidate"
         },
         {
             label: "Membership",
-            path: '/memberShip',
+            path: '/membership',
             show: user != 'null'
         },
         {
