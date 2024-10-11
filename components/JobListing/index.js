@@ -3,8 +3,9 @@
 import React from 'react'
 import PostNewJob from '../post-new-job'
 import RecruiterJobCard from '../recruiter-job-card'
+import CandidateJobCard from '../candidate-job-card'
 
-const JobListing = ({ profileInfo, user, jobList }) => {
+const JobListing = ({ profileInfo, user, jobList, getJobApplicationList }) => {
     return (
         <div>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -28,11 +29,12 @@ const JobListing = ({ profileInfo, user, jobList }) => {
                                         jobList.map((jobItem, index) => (
                                             profileInfo?.role === "candidate" ? (
                                                 <div key={index}>
-                                                    <p>{jobItem.title}</p>
+
+                                                    <CandidateJobCard getJobApplicationList={getJobApplicationList} key={index} jobItem={jobItem} profileInfo={profileInfo} />
                                                     {/* Add other candidate job details here */}
                                                 </div>
                                             ) : (
-                                                <RecruiterJobCard key={index} jobItem={jobItem} />
+                                                <RecruiterJobCard getJobApplicationList={getJobApplicationList} key={index} jobItem={jobItem} />
                                             )
                                         ))
                                     ) : (

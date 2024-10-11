@@ -16,7 +16,7 @@ const supabaseClient = createClient('https://uipypeqycvarkryygfsm.supabase.co',
 function OnBoard() {
     const currentAuthUser = useUser();
     const { user } = currentAuthUser
-    console.log(currentAuthUser);
+
 
     const [currentTab, setCurrentTab] = useState("candidate")
     const [formControls, setFormControls] = useState(initialRecruiterFormData)
@@ -42,7 +42,7 @@ function OnBoard() {
             cacheControl: "3600",
             upsert: false,
         })
-        console.log(data, error);
+
         if (data) {
             setCandidateFormControls({
                 ...candidateFormControls,

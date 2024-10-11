@@ -12,7 +12,7 @@ const CommonCard = ({ icon, title, description, footerContent, details }) => {
                 {icon && <div className="flex-shrink-0">{icon}</div>}
                 <div className="flex-1">
                     {title && (
-                        <CardTitle className="text-xl font-semibold text-gray-900 truncate">
+                        <CardTitle className="flex justify-center text-xl font-semibold text-gray-900 truncate">
                             {title}
                         </CardTitle>
                     )}
