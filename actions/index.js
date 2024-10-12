@@ -124,3 +124,64 @@ export async function getCandidateDetailsById(currentCandidateId) {
 
     return JSON.parse(JSON.stringify(candidate))
 }
+
+
+export async function updateJobApplicationAction(data, pathToRevalidate) {
+    try {
+
+        const {
+            _id,
+            recruiterUserID,
+            name,
+            email,
+            candidateUserId,
+            status,
+            jobID,
+            jobAppliedDate,
+        } = data
+
+        await connectToDb();
+
+        await Application.updateOne(
+            { _id: _id },
+            {
+                $set: {
+                    recruiterUserID: recruiterUserID,
+                    name: name,
+                    email: email,
+                    candidateUserId: candidateUserId,
+                    status: status,
+                    jobID: jobID,
+                    jobAppliedDate: jobAppliedDate
+                }
+            },
+            { new: true }
+        )
+
+        revalidatePath(pathToRevalidate);
+        return true
+
+    } catch (error) {
+        console.log(error);
+
+    }
+}
+
+
+
+export async function createFilterCategoryAction() {
+    try {
+
+        // const filterCategory = await Job.aggregate([
+        //     { $group: { _id: "$category", count: { $sum: 1 } } },
+        //     { $sort: { count: -1 } },
+        // ]);
+        const filterCategory = await Job.find({});
+
+        return JSON.parse(JSON.stringify(filterCategory))
+
+    } catch (err) {
+        console.log(err);
+
+    }
+}

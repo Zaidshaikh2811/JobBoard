@@ -20,8 +20,6 @@ const CandidateJobCard = ({ jobItem, profileInfo, getJobApplicationList }) => {
 
 
 
-    console.log(getJobApplicationList);
-    console.log(jobItem);
 
 
 

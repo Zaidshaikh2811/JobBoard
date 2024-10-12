@@ -3,7 +3,7 @@
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogFooter } from '../ui/dialog'
-import { getCandidateDetailsById } from '@/actions'
+import { getCandidateDetailsById, updateJobApplicationAction } from '@/actions'
 import { createClient } from '@supabase/supabase-js'
 
 const supabaseClient = createClient('https://uipypeqycvarkryygfsm.supabase.co',
@@ -26,6 +26,19 @@ const CandidateList = ({
             setShowCurrentCandidateDetailsModal(true)
 
         }
+    }
+
+    async function handleUpdateJobStatus(getCurrentStatus) {
+        let cpyJobApplicants = [...JobApplicants]
+        const indexOfCurrentJobApplicants = cpyJobApplicants.findIndex(item => item.candidateUserId === currentCandidateDetails?.userId)
+
+        const jobApplicantsToUpdate = {
+            ...cpyJobApplicants[indexOfCurrentJobApplicants],
+            status: cpyJobApplicants[indexOfCurrentJobApplicants].status.concat(getCurrentStatus)
+        }
+
+        await updateJobApplicationAction(jobApplicantsToUpdate, "/jobs")
+
     }
 
     async function handlePreviewResume() {
@@ -121,9 +134,23 @@ const CandidateList = ({
                     </div>
 
                     <div className="mt-6 flex justify-between items-center gap-4">
-                        <Button onClick={handlePreviewResume} className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Resume</Button>
-                        <Button className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">Select</Button>
-                        <Button className="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">Reject</Button>
+                        <Button onClick={handlePreviewResume} className=" disabled:opacity-65 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors">Resume</Button>
+                        <Button
+                            disabled={
+                                JobApplicants.find(item => item.candidateUserId === currentCandidateDetails?.userId)?.status.includes("Selected") || JobApplicants.find(item => item.candidateUserId === currentCandidateDetails?.userId)?.status.includes("Rejected") ? true : false
+                            }
+                            onClick={() => handleUpdateJobStatus("Selected")} className="disabled:opacity-65 bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors">{
+                                JobApplicants.find(item => item.candidateUserId === currentCandidateDetails?.userId)?.status.includes("Selected") ? "Selected" : 'Select'}
+                        </Button>
+                        <Button
+                            disabled={
+                                JobApplicants.find(item => item.candidateUserId === currentCandidateDetails?.userId)?.status.includes("Selected") ? true : false
+                            }
+                            className="disabled:opacity-65 bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition-colors">
+                            {
+                                JobApplicants.find(item => item.candidateUserId === currentCandidateDetails?.userId)?.status.includes("Rejected") || JobApplicants.find(item => item.candidateUserId === currentCandidateDetails?.userId)?.status.includes("Selected") ? "Rejected" : 'Reject'}
+
+                        </Button>
                     </div>
 
                 </DialogContent>
