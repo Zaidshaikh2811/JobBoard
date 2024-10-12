@@ -11,6 +11,6 @@ const applicationSchema = new mongoose.Schema({
     jobAppliedDate: String,
 })
 
-const application = mongoose.models.Application || mongoose.model("Application", applicationSchema)
+const Application = mongoose.models.Application || mongoose.model("Application", applicationSchema)
 
-module.exports = application
+module.exports = Application

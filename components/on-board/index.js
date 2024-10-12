@@ -36,7 +36,7 @@ function OnBoard() {
     async function handleUploadPdfToSupaBase() {
 
         const { data, error } = await supabaseClient.storage.from(
-            "job-board",
+            "job-board-public",
 
         ).upload(`/public/${file.name}`, file, {
             cacheControl: "3600",

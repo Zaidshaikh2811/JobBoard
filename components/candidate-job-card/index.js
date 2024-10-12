@@ -1,5 +1,5 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import CommonCard from '../common-card';
 import JobIcon from '../job-icon';
 import { Button } from '../ui/button';
@@ -13,10 +13,18 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer";
-import { createJobApplicationAction } from '@/actions';
+import { createJobApplicationAction, fetchApplicationCount, fetchJobApplicationsForCandidate } from '@/actions';
 
 const CandidateJobCard = ({ jobItem, profileInfo, getJobApplicationList }) => {
     const [showJobDetails, setShowJobDetails] = useState(false);
+
+
+
+    console.log(getJobApplicationList);
+    console.log(jobItem);
+
+
+
 
 
     // Log the state of the drawer
@@ -25,9 +33,13 @@ const CandidateJobCard = ({ jobItem, profileInfo, getJobApplicationList }) => {
         setShowJobDetails(isOpen);
     };
 
+
+
     const handleJobApply = async () => {
+
+
         await createJobApplicationAction({
-            recruiterUserID: jobItem?.recruiterUserID,
+            recruiterUserID: jobItem?.recruiterId,
             name: profileInfo?.candidateInfo?.name,
             email: profileInfo?.email,
             candidateUserId: profileInfo?.userId,
@@ -40,8 +52,8 @@ const CandidateJobCard = ({ jobItem, profileInfo, getJobApplicationList }) => {
 
     return (
         <div className="transition-transform transform hover:scale-105 duration-200 ease-in-out">
-            {/* Debug log for rendering */}
-            {console.log('Rendering CandidateJobCard with jobItem:', jobItem)}
+
+
 
             <Drawer open={showJobDetails} onOpenChange={handleDrawerToggle}>
                 <CommonCard
@@ -58,15 +70,17 @@ const CandidateJobCard = ({ jobItem, profileInfo, getJobApplicationList }) => {
                     footerContent={
                         <div className="flex justify-between items-center w-full">
                             <p className="text-gray-500 text-sm">
-                                {jobItem?.applicants.length} Applicants
+
+                                {getJobApplicationList?.filter(item => item.jobID == jobItem._id).length} Applicants
+
                             </p>
-                            {/* Log when the 'View Details' button is clicked */}
-                            {console.log('Button rendered: View Details')}
+
 
                             <DrawerTrigger>
                                 <Button
-                                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
+                                    className="disabled:opacity-65 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md"
                                     onClick={() => console.log('View Details button clicked')}
+                                    disabled={getJobApplicationList.findIndex(item => item.jobID == jobItem?._id).length == 0}
                                 >
                                     View Details
                                 </Button>
@@ -123,10 +137,22 @@ const CandidateJobCard = ({ jobItem, profileInfo, getJobApplicationList }) => {
 
                     <DrawerFooter className="mt-8">
                         <Button
-                            className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all duration-300 ease-in-out"
+                            disabled={
+                                getJobApplicationList?.filter(
+                                    (item) => item.jobID === jobItem?._id && item.candidateUserId === profileInfo?.userId
+                                ).length > 0
+                            }
+                            className="disabled:opacity-65 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg transition-all duration-300 ease-in-out"
                             onClick={() => handleJobApply()}
                         >
-                            Apply
+                            {
+                                getJobApplicationList?.filter(
+                                    (item) => item.jobID === jobItem?._id && item.candidateUserId === profileInfo?.userId
+                                ).length > 0
+                                    ? "Applied"
+                                    : "Apply"
+                            }
+
                         </Button>
                     </DrawerFooter>
                 </DrawerContent>

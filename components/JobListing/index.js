@@ -5,7 +5,12 @@ import PostNewJob from '../post-new-job'
 import RecruiterJobCard from '../recruiter-job-card'
 import CandidateJobCard from '../candidate-job-card'
 
-const JobListing = ({ profileInfo, user, jobList, getJobApplicationList }) => {
+
+const JobListing = ({ profileInfo, user, jobList, getJobApplicationList, applicationCount }) => {
+
+
+
+
     return (
         <div>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -30,11 +35,11 @@ const JobListing = ({ profileInfo, user, jobList, getJobApplicationList }) => {
                                             profileInfo?.role === "candidate" ? (
                                                 <div key={index}>
 
-                                                    <CandidateJobCard getJobApplicationList={getJobApplicationList} key={index} jobItem={jobItem} profileInfo={profileInfo} />
+                                                    <CandidateJobCard applicationCount={applicationCount} getJobApplicationList={getJobApplicationList} key={index} jobItem={jobItem} profileInfo={profileInfo} />
                                                     {/* Add other candidate job details here */}
                                                 </div>
                                             ) : (
-                                                <RecruiterJobCard getJobApplicationList={getJobApplicationList} key={index} jobItem={jobItem} />
+                                                <RecruiterJobCard applicationCount={applicationCount} getJobApplicationList={getJobApplicationList} key={index} jobItem={jobItem} />
                                             )
                                         ))
                                     ) : (

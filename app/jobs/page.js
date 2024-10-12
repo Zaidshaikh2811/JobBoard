@@ -12,6 +12,8 @@ const JobsPage = async () => {
 
 
 
+
+
     return (
         <div>
             <JobListing
@@ -19,6 +21,7 @@ const JobsPage = async () => {
                 user={JSON.parse(JSON.stringify(user))}
                 jobList={jobList}
                 getJobApplicationList={getJobApplicationList}
+
             />
         </div>
     )

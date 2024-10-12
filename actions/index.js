@@ -1,9 +1,11 @@
 "use server"
 
 import connectToDb from "@/database"
+import Application from "@/models/application";
 import application from "@/models/application";
 import Job from "@/models/job";
 import Profile from "@/models/profile";
+import { Error } from "mongoose";
 import { revalidatePath } from "next/cache";
 
 
@@ -63,22 +65,62 @@ export async function createJobApplicationAction(data, pathToRevalidate) {
     revalidatePath(pathToRevalidate);
 }
 
-export async function fetchJobApplicationsForCandidate(candidateID) {
+export async function fetchJobApplicationsForCandidate() {
 
-    await connectToDb();
 
-    const applications = await application.find({ candidateId: candidateID });
+    try {
+        // Connect to the database
+        await connectToDb();
 
-    return JSON.parse(JSON.stringify(applications))
+        // Fetch all documents from the 'applications' collection
+        const applicationsDoc = await Application.find({});
+
+        // Convert the documents to JSON-friendly format and return them
+        return JSON.parse(JSON.stringify(applicationsDoc));
+
+    } catch (error) {
+        console.error('Error fetching job applications:', error);
+        throw new Error('Failed to fetch job applications');
+    }
 
 }
 
 export async function fetchJobApplicationsForRecruiter(recruiterId) {
 
+
+    try {
+        // Connect to the database
+        await connectToDb();
+
+        // Fetch all documents from the 'applications' collection
+        const applicationsDoc = await Application.find({});
+
+
+        // Convert the documents to JSON-friendly format and return them
+        return JSON.parse(JSON.stringify(applicationsDoc));
+
+    } catch (error) {
+        console.error('Error fetching job applications:', error);
+
+    }
+}
+
+
+export async function fetchApplicationCount(jobID) {
+
     await connectToDb();
 
-    const result = await application.find({ recruiterUserId: recruiterId });
+    const count = await Application.countDocuments({ jobID: jobID });
 
-    return JSON.parse(JSON.stringify(result))
 
+    return count
+}
+
+export async function getCandidateDetailsById(currentCandidateId) {
+
+    await connectToDb();
+
+    const candidate = await Profile.findOne({ userId: currentCandidateId });
+
+    return JSON.parse(JSON.stringify(candidate))
 }
