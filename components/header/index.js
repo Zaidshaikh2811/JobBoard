@@ -17,6 +17,11 @@ const Header = ({ user, profileInfo }) => {
             show: true
         },
         {
+            label: "Feed",
+            path: '/feed',
+            show: user != 'null'
+        },
+        {
             label: "Login",
             path: '/sign-in',
             show: user == 'null'
