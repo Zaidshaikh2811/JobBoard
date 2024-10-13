@@ -5,6 +5,12 @@ import { currentUser } from '@clerk/nextjs/server';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
 
+
+export const metadata = {
+  title: "Your Gateway to Top Jobs - Find Your Dream Career",
+  description: "Discover top job opportunities from leading companies. Explore the best job portal to find your next career move with ease.",
+};
+
 export default async function Home() {
   const user = await currentUser();
   const profileInfo = await fetchProfileAction(user?.id);
@@ -12,7 +18,7 @@ export default async function Home() {
   if (user && !profileInfo?._id) redirect("/onboard");
 
   return (
-    <section className="flex w-full h-[95vh] flex-col items-center justify-center p-8 lg:p-24 bg-gradient-to-r from-blue-100 to-white">
+    <section className="flex w-full h-[95vh] flex-col items-center justify-center p-8 lg:p-24 bg-gradient-to-r from-blue-100 to-white mt-4">
       <div className="relative w-full">
         <div className="container mx-auto flex flex-col-reverse lg:flex-row items-center gap-12 lg:gap-0">
           {/* Left section with text */}

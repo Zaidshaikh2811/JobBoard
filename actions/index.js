@@ -7,6 +7,7 @@ import Job from "@/models/job";
 import Profile from "@/models/profile";
 import { Error } from "mongoose";
 import { revalidatePath } from "next/cache";
+const stripe = require("stripe")("sk_test_51Q9QmbSB6cFymKAAAuxQ3LYBjtDZvItGHanNCnOmbFtmzhAM7KeHaJ8ORbeX4yeXCBWOSrwSrlXEHtjcrO8NQlAv00WfrVlyeG")
 
 
 export async function createProfileAction(formData, pathToRevalidate) {
@@ -72,7 +73,7 @@ export async function createJobApplicationAction(data, pathToRevalidate) {
     revalidatePath(pathToRevalidate);
 }
 
-export async function fetchJobApplicationsForCandidate() {
+export async function fetchJobApplicationsForCandidate(userId) {
 
 
     try {
@@ -80,7 +81,10 @@ export async function fetchJobApplicationsForCandidate() {
         await connectToDb();
 
         // Fetch all documents from the 'applications' collection
-        const applicationsDoc = await Application.find({});
+        const applicationsDoc = await Application.find({
+
+            candidateUserId: userId
+        });
 
         // Convert the documents to JSON-friendly format and return them
         return JSON.parse(JSON.stringify(applicationsDoc));
@@ -198,6 +202,7 @@ export async function createFilterCategoryAction() {
 export async function UpdateProfileACtion(data, pathTorevalidate) {
     try {
 
+
         await connectToDb();
         const { userId, role, email, isPremiumUser, memberShipStartDate,
             memberShipEndDate, memberShipType, recruiterInfo, candidateInfo, _id } = data
@@ -220,6 +225,7 @@ export async function UpdateProfileACtion(data, pathTorevalidate) {
             { new: true }
         )
 
+
         revalidatePath(pathTorevalidate);
         return { message: "Profile updated successfully" }
 
@@ -229,4 +235,48 @@ export async function UpdateProfileACtion(data, pathTorevalidate) {
     } catch (error) {
         console.log(error);
     }
+}
+
+
+
+export async function createPriceIdAction(data) {
+    console.log(data);
+
+
+
+    const session = await stripe.prices.create({
+        currency: 'inr',
+        unit_amount: data?.amount * 100,
+        recurring: {
+            interval: 'year'
+        },
+        product_data: {
+            name: "Premium Plan"
+        }
+    })
+
+    return {
+        success: true,
+        id: session?.id
+    }
+}
+
+
+export async function createStripePaymentACtion(data) {
+
+    const session = await stripe.checkout.sessions.create({
+        payment_method_types: ['card'],
+        line_items: data?.lineItems,
+        mode: "subscription",
+        success_url: 'http://localhost:3000/membership' + "?status=success",
+        cancel_url: "http://localhost:3000/membership" + "?status=cancel"
+
+    })
+
+    return {
+        success: true,
+        id: session?.id
+
+    }
+
 }

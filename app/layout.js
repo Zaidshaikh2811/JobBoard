@@ -4,7 +4,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Suspense } from "react"
 import Loading from "./loading";
 import CommonLayout from "@/components/commonLayout";
-
+import { Toaster } from "@/components/ui/toaster"
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -33,6 +33,7 @@ export default function RootLayout({ children }) {
           <Suspense fallback={<Loading />}>
             <CommonLayout  >{children}</CommonLayout>
           </Suspense>
+          <Toaster />
 
         </body>
       </html>

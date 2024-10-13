@@ -5,11 +5,10 @@ import { Button } from "../ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
 import { AlignJustify } from "lucide-react"
 import { UserButton } from "@clerk/nextjs"
-
+import { usePathname } from "next/navigation"
 
 const Header = ({ user, profileInfo }) => {
-
-
+    const pathname = usePathname();
 
     const menuItems = [
         {
@@ -18,7 +17,7 @@ const Header = ({ user, profileInfo }) => {
             show: true
         },
         {
-            label: "login",
+            label: "Login",
             path: '/sign-in',
             show: user == 'null'
         },
@@ -28,6 +27,11 @@ const Header = ({ user, profileInfo }) => {
             show: user == 'null'
         },
         {
+            label: "Companies",
+            path: '/companies',
+            show: profileInfo?.role === "candidate"
+        },
+        {
             label: "Jobs",
             path: '/jobs',
             show: user != 'null'
@@ -35,7 +39,7 @@ const Header = ({ user, profileInfo }) => {
         {
             label: "Activity",
             path: '/activity',
-            show: profileInfo?.role == "candidate"
+            show: profileInfo?.role === "candidate"
         },
         {
             label: "Membership",
@@ -47,12 +51,12 @@ const Header = ({ user, profileInfo }) => {
             path: '/accounts',
             show: user != 'null'
         },
-    ]
-
+    ];
 
     return (
-        <div>
-            <header className="flex h-16 w-full shrink-0 items-center">
+        <header className="flex h-16 w-full items-center border-b border-gray-200 shadow-md bg-white">
+            <div className="container mx-auto flex justify-between items-center px-4 lg:px-8">
+                {/* Mobile Menu Trigger */}
                 <Sheet>
                     <SheetTrigger asChild>
                         <Button className="lg:hidden">
@@ -61,40 +65,50 @@ const Header = ({ user, profileInfo }) => {
                         </Button>
                     </SheetTrigger>
                     <SheetContent side="left">
-                        <Link className="mr-6 hidden lg:flex" href={"#"}>
-                            <h3>JOBSCO</h3>
-                        </Link>
-                        <div className="grid gap-2 py-6">
-                            {menuItems.map((menuItem, index) => {
-                                return (
-                                    menuItem.show ? (
-                                        <Link key={index} className="flex w-full items-center py-2 text-lg font-semibold" href={menuItem.path}>{menuItem.label}</Link>
-                                    ) : null
-                                )
-                            })}
+                        <div className="grid gap-4 py-6">
+                            <Link className="text-2xl font-bold text-indigo-600" href="/">
+                                JOBSCO
+                            </Link>
+                            {menuItems.map((menuItem, index) => (
+                                menuItem.show ? (
+                                    <Link
+                                        key={index}
+                                        className={`flex w-full items-center py-2 text-lg font-semibold ${pathname === menuItem.path ? 'text-indigo-600 underline' : 'text-gray-700'}`}
+                                        href={menuItem.path}
+                                    >
+                                        {menuItem.label}
+                                    </Link>
+                                ) : null
+                            ))}
                             <UserButton afterSignOutUrl="/" />
                         </div>
                     </SheetContent>
                 </Sheet>
-                <Link href={"/"} className="hidden lg:flex ml-6">JOBSCO</Link>
-                <nav className="ml-auto hidden lg:flex gap-6">
-                    {
-                        menuItems.map((menuItems, index) => menuItems.show ? (
-                            <Link key={index}
-                                className="group inline-flex h-9 w-max items-center rounded-md bg-white px-4 py-2 text-sm font-medium"
-                                href={menuItems.path}
+
+                {/* Logo for Desktop */}
+                <Link href="/" className="hidden lg:flex text-2xl font-bold text-indigo-600">
+                    JOBSCO
+                </Link>
+
+                {/* Desktop Navigation */}
+                <nav className="hidden lg:flex items-center space-x-6">
+                    {menuItems.map((menuItem, index) => (
+                        menuItem.show ? (
+                            <Link
+                                key={index}
+                                className={`group  inline-flex h-9 items-center px-4 py-2 text-md font-medium rounded-md ${pathname === menuItem.path ? ' text-indigo-600 underline' : 'text-gray-700 hover:bg-gray-100 hover:text-indigo-600'}`}
+                                href={menuItem.path}
                                 onClick={() => sessionStorage.removeItem("filterParams")}
                             >
-                                {menuItems.label}
+                                {menuItem.label}
                             </Link>
-                        ) : null)
-                    }
+                        ) : null
+                    ))}
                     <UserButton afterSignOutUrl="/" />
                 </nav>
-            </header>
+            </div>
+        </header>
+    );
+};
 
-        </div>
-    )
-}
-
-export default Header
+export default Header;

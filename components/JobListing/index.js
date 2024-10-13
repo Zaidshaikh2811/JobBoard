@@ -68,7 +68,7 @@ const JobListing = ({ profileInfo, user, jobList, getJobApplicationList, fetchFi
         }
         setFilterParams(cpyFilters)
         sessionStorage.setItem("filterParams", JSON.stringify(cpyFilters))
-        console.log(cpyFilters);
+
 
     }
 
@@ -103,7 +103,7 @@ const JobListing = ({ profileInfo, user, jobList, getJobApplicationList, fetchFi
                                     </MenubarContent>
                                 </MenubarMenu>
                             ))}
-                        </Menubar> : <PostNewJob profileInfo={profileInfo} user={user} />}
+                        </Menubar> : <PostNewJob jobList={jobList} profileInfo={profileInfo} user={user} />}
                     </div>
                 </div>
 
@@ -121,7 +121,7 @@ const JobListing = ({ profileInfo, user, jobList, getJobApplicationList, fetchFi
 
 
                                                     <CandidateJobCard getJobApplicationList={getJobApplicationList} key={index} jobItem={jobItem} profileInfo={profileInfo} />
-                                                    {/* Add other candidate job details here */}
+
                                                 </div>
                                             ) : (
                                                 <RecruiterJobCard getJobApplicationList={getJobApplicationList} key={index} jobItem={jobItem} />

@@ -4,6 +4,10 @@ import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from "next/navigation";
 
 
+export const metadata = {
+    title: "Onboarding - Complete Your Profile",
+    description: "Get started by setting up your account details and preferences. Ensure your profile is complete for a tailored experience.",
+};
 
 const OnBoardPage = async () => {
 

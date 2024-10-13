@@ -304,3 +304,69 @@ export function formUrlQuery({ params, dataToAdd }) {
         skipNulls: true
     })
 }
+
+
+export const memberPlans = [
+    {
+        heading: "Starter",
+        price: 49,
+        type: "Basic",
+        duration: "Monthly",
+        features: [
+            "3 Active Projects",
+            "5 GB Storage",
+            "Email Support",
+            "Access to Basic Templates",
+            "Analytics Dashboard",
+        ],
+    },
+    {
+        heading: "Pro",
+        price: 199,
+        type: "Professional",
+        duration: "Monthly",
+        features: [
+            "10 Active Projects",
+            "50 GB Storage",
+            "Priority Email Support",
+            "Access to Advanced Templates",
+            "Custom Branding",
+            "Advanced Analytics & Reports",
+            "Team Collaboration (up to 10 members)",
+        ],
+    },
+    {
+        heading: "Business",
+        price: 499,
+        type: "Small Teams",
+        duration: "Monthly",
+        features: [
+            "Unlimited Active Projects",
+            "500 GB Storage",
+            "Priority Phone & Email Support",
+            "Access to Premium Templates",
+            "Custom Domain & Branding",
+            "Advanced Workflow Automation",
+            "Team Collaboration (up to 50 members)",
+            "Custom Integrations",
+        ],
+    },
+    {
+        heading: "Enterprise",
+        price: 999,
+        type: "Large Teams",
+        duration: "Annually",
+        features: [
+            "Unlimited Projects",
+            "Unlimited Storage",
+            "24/7 Dedicated Support",
+            "Custom Integrations & API Access",
+            "Custom Security Policies",
+            "Onboarding & Training",
+            "Team Collaboration (unlimited members)",
+            "Enterprise SLA",
+            "Multi-team Management",
+            "Dedicated Account Manager",
+        ],
+    },
+];

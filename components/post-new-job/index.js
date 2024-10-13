@@ -3,12 +3,15 @@
 import React, { useState } from 'react'
 import { Button } from '../ui/button'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '../ui/dialog'
-
+import { useToast } from "@/hooks/use-toast"
 import CommonForm from '../common-form'
 import { initialPostNewJobFormData, postNewJobFormControls } from '@/utils'
 import { postNewJobAction } from '@/actions'
+import Link from 'next/link'
 
-const PostNewJob = ({ profileInfo, user }) => {
+const PostNewJob = ({ profileInfo, user, jobList }) => {
+
+    const { toast } = useToast()
     const [showJobDialog, setShowJobDialog] = useState(false)
     const [jobFormData, setJobFormData] = useState({
         ...initialPostNewJobFormData,
@@ -27,11 +30,35 @@ const PostNewJob = ({ profileInfo, user }) => {
         })
     }
 
+    function handleAddNewJob() {
+        if (!profileInfo?.isPremiumUser && jobList?.length >= 1) {
+            toast({
+                variant: "destructive",
+                title: "You Can Post Max 2 New Job",
+                description: " Please Upgrade Your Membership",
+                action: <Link
+                    href="/membership"
+                    className="text-white text-[15px] font-sm hover:underline transition duration-200 ease-in-out"
+                >
+                    Choose Membership
+                </Link>
+            })
+
+            return
+
+
+        }
+
+        setShowJobDialog(true)
+
+
+    }
+
     return (
         <div>
             {/* Button with hover and transition effect */}
             <Button
-                onClick={() => setShowJobDialog(true)}
+                onClick={handleAddNewJob}
                 className="disabled:opacity-60 flex h-11 items-center justify-center px-5 
                            bg-black text-white hover:bg-gray-800 transition-all duration-300">
                 Post A Job

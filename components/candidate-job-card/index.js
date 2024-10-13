@@ -13,10 +13,14 @@ import {
     DrawerTitle,
     DrawerTrigger,
 } from "@/components/ui/drawer";
-import { createJobApplicationAction, fetchApplicationCount, fetchJobApplicationsForCandidate } from '@/actions';
-
+import { createJobApplicationAction } from '@/actions';
+import { useToast } from "@/hooks/use-toast"
+import Link from 'next/link';
 const CandidateJobCard = ({ jobItem, profileInfo, getJobApplicationList }) => {
     const [showJobDetails, setShowJobDetails] = useState(false);
+
+    const { toast } = useToast()
+
 
 
 
@@ -34,6 +38,21 @@ const CandidateJobCard = ({ jobItem, profileInfo, getJobApplicationList }) => {
 
 
     const handleJobApply = async () => {
+        if (!profileInfo?.isPremiumUser && getJobApplicationList.length >= 2) {
+            toast({
+                variant: "destructive",
+                title: "You Can Apply Max 2 New Job",
+                description: " Please Upgrade Your Membership",
+                action: <Link
+                    href="/membership"
+                    className="text-white text-[15px] font-sm hover:underline transition duration-200 ease-in-out"
+                >
+                    Choose Membership
+                </Link>
+            })
+
+            return
+        }
 
 
         await createJobApplicationAction({
