@@ -18,7 +18,7 @@ const ProfileSchema = new mongoose.Schema({
         name: String,
         currentJobLocation: String,
         preferredJobLocation: String,
-        noticePeriod: String,
+        currentPeriod: String,
         currentSalary: String,
         skills: String,
         currentCompany: String,

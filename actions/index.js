@@ -192,3 +192,41 @@ export async function createFilterCategoryAction() {
 
     }
 }
+
+
+
+export async function UpdateProfileACtion(data, pathTorevalidate) {
+    try {
+
+        await connectToDb();
+        const { userId, role, email, isPremiumUser, memberShipStartDate,
+            memberShipEndDate, memberShipType, recruiterInfo, candidateInfo, _id } = data
+
+
+        await Profile.updateOne({ _id: _id },
+            {
+                $set: {
+                    userId: userId,
+                    role: role,
+                    email: email,
+                    isPremiumUser: isPremiumUser,
+                    memberShipStartDate: memberShipStartDate,
+                    memberShipEndDate: memberShipEndDate,
+                    memberShipType: memberShipType,
+                    recruiterInfo: recruiterInfo,
+                    candidateInfo: candidateInfo
+                }
+            },
+            { new: true }
+        )
+
+        revalidatePath(pathTorevalidate);
+        return { message: "Profile updated successfully" }
+
+
+
+
+    } catch (error) {
+        console.log(error);
+    }
+}

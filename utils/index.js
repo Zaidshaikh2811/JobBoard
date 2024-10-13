@@ -178,6 +178,26 @@ export const initialCandidateFormData = {
 
 
 }
+export const initialCandidateAccountFormData = {
+    name: "",
+
+    currentCompany: "",
+    currentJobLocation: "",
+    preferredJobLocation: "",
+    currentSalary: "",
+    currentPeriod: "",
+    skills: "",
+    previousCompanies: "",
+    totalExperience: "",
+    college: "",
+    collegeLocation: "",
+    graduatedYear: "",
+    linkedinProfile: "",
+    githubProfile: "",
+
+
+
+}
 
 
 
