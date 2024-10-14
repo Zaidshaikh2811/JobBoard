@@ -45,7 +45,6 @@ function OnBoard() {
 
     }
 
-
     const handleTabChange = (value) => {
         setCurrentTab(value)
     }
