@@ -110,7 +110,7 @@ const Feed = ({ user, profileInfo, allFeedPost }) => {
         if (imageData) {
             handleUploadImageToSupabase()
         }
-    }, [imageData])
+    }, [imageData, handleUploadImageToSupabase])
 
 
     async function handleUpdateFeedPostLikes(getCurrentFeedPost) {

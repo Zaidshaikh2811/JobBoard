@@ -35,7 +35,7 @@ const JobListing = ({ profileInfo, user, jobList, getJobApplicationList, fetchFi
 
         }
 
-    }, [filtersParams, searchParams])
+    }, [filtersParams, searchParams, router])
 
 
     const filterMenus = filterMenuDataArray.map(item => ({

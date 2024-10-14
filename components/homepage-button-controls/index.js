@@ -9,7 +9,7 @@ const HomePageButtonControls = ({ profileInfo, user }) => {
 
     useEffect(() => {
         router.refresh()
-    }, [])
+    }, [router])
 
     return (
         <>

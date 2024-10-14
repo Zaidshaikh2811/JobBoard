@@ -24,15 +24,7 @@ function OnBoard() {
     const [candidateFormControls, setCandidateFormControls] = useState(initialCandidateFormData)
     const [file, setFile] = useState(null)
 
-    useEffect(() => {
 
-        if (file) {
-
-
-            handleUploadPdfToSupaBase()
-        }
-
-    }, [file])
 
     async function handleUploadPdfToSupaBase() {
 
@@ -52,6 +44,7 @@ function OnBoard() {
         }
 
     }
+
 
     const handleTabChange = (value) => {
         setCurrentTab(value)
@@ -92,7 +85,15 @@ function OnBoard() {
         }
         await createProfileAction(data, '/onboard')
     }
+    useEffect(() => {
 
+        if (file) {
+
+
+            handleUploadPdfToSupaBase()
+        }
+
+    }, [file, handleUploadPdfToSupaBase])
 
 
 

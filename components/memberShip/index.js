@@ -63,7 +63,7 @@ const MemberShip = ({ profileInfo }) => {
 
     useEffect(() => {
         if (pathName.get("status") === "success") updateProfile();
-    }, [pathName])
+    }, [pathName, updateProfile])
 
 
     return (
