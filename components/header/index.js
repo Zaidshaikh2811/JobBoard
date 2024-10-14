@@ -3,11 +3,13 @@
 import Link from "next/link"
 import { Button } from "../ui/button"
 import { Sheet, SheetContent, SheetTrigger } from "../ui/sheet"
-import { AlignJustify } from "lucide-react"
+import { AlignJustify, Moon } from "lucide-react"
 import { UserButton } from "@clerk/nextjs"
 import { usePathname } from "next/navigation"
+import { useTheme } from "next-themes"
 
 const Header = ({ user, profileInfo }) => {
+    const { theme, setTheme } = useTheme()
     const pathname = usePathname();
 
     const menuItems = [
@@ -85,6 +87,13 @@ const Header = ({ user, profileInfo }) => {
                                     </Link>
                                 ) : null
                             ))}
+                            <Moon
+                                className={`h-6 w-6 cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-110 ${theme === 'dark' ? 'text-yellow-400' : 'text-gray-700 hover:text-indigo-600'
+                                    }`}
+                                fill={theme === 'dark' ? 'currentColor' : 'none'}
+                                stroke={theme === 'dark' ? 'none' : 'currentColor'}
+                                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                            />
                             <UserButton afterSignOutUrl="/" />
                         </div>
                     </SheetContent>
@@ -109,6 +118,14 @@ const Header = ({ user, profileInfo }) => {
                             </Link>
                         ) : null
                     ))}
+                    <Moon
+                        className={`h-6 w-6 cursor-pointer transform transition-transform duration-300 ease-in-out hover:scale-110 ${theme === 'dark' ? 'text-yellow-400' : 'text-gray-700 hover:text-indigo-600'
+                            }`}
+                        fill={theme === 'dark' ? 'currentColor' : 'none'}
+                        stroke={theme === 'dark' ? 'none' : 'currentColor'}
+                        onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                    />
+
                     <UserButton afterSignOutUrl="/" />
                 </nav>
             </div>

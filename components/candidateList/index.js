@@ -6,8 +6,9 @@ import { Dialog, DialogContent, DialogFooter } from '../ui/dialog'
 import { getCandidateDetailsById, updateJobApplicationAction } from '@/actions'
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseClient = createClient('https://uipypeqycvarkryygfsm.supabase.co',
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVpcHlwZXF5Y3ZhcmtyeXlnZnNtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Mjg2NTcyNzUsImV4cCI6MjA0NDIzMzI3NX0.yd93UQ0jyERAOwAdtPApx9LilEBBBbksvX6IXADptdY'
+const supabaseClient = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLIC_KEY
+
 )
 
 

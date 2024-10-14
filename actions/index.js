@@ -3,6 +3,7 @@
 import connectToDb from "@/database"
 import Application from "@/models/application";
 import application from "@/models/application";
+import Feed from "@/models/feed";
 import Job from "@/models/job";
 import Profile from "@/models/profile";
 import { Error } from "mongoose";
@@ -278,5 +279,84 @@ export async function createStripePaymentACtion(data) {
         id: session?.id
 
     }
+
+}
+
+
+
+export async function createFeedPostAction(data, pathToRevalidate) {
+    try {
+
+
+        await connectToDb();
+
+        await Feed.create(data);
+
+        revalidatePath(pathToRevalidate);
+    }
+    catch (error) {
+        console.log(error);
+
+    }
+
+
+
+}
+
+export async function fetchAllFeedPostAction() {
+    try {
+
+
+        await connectToDb();
+
+        const feed = await Feed.find({});
+
+        return JSON.parse(JSON.stringify(feed))
+    }
+    catch (error) {
+        console.log(error);
+
+    }
+
+
+
+}
+
+export async function updateFeedPostAction(data, pathToRevalidate) {
+    try {
+
+
+        await connectToDb();
+        const {
+            userId,
+            userName,
+            message,
+            image,
+            likes,
+            _id
+        } = data
+        await Feed.updateOne(
+            { _id: _id },
+            {
+                $set: {
+                    userId: userId,
+                    userName: userName,
+                    message: message,
+                    image: image,
+                    likes: likes
+                }
+            },
+            { new: true }
+        )
+
+        revalidatePath(pathToRevalidate);
+        return true
+    }
+    catch (error) {
+        console.log(error);
+
+    }
+
+
 
 }
